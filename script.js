@@ -1,3 +1,4 @@
+// Projeto realizado com ajuda de colegas;
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -38,8 +39,20 @@ async function getProduct() {
    return item.querySelector('span.item__sku').innerText;
  }
 
+ async function priceCart() {
+  let total = 0;
+  const cartItems = document.querySelectorAll('.cart__item');
+  const totalPrice = document.querySelector('.total-price');
+  cartItems.forEach((cartItem) => {
+    const item = cartItem.innerText.split('$');
+    total += Number(item[1]);
+  });
+  totalPrice.innerHTML = total;
+}
+
 function cartItemClickListener(event) {
  event.target.remove();
+ priceCart();
 }
 
 function createCartItemElement({ id, title, price }) {
@@ -49,17 +62,31 @@ function createCartItemElement({ id, title, price }) {
   li.addEventListener('click', cartItemClickListener);
    return li;
  }
+
  async function getItem(id) {
    const response = await fetch(`https://api.mercadolibre.com/items/${id}`);
    const items = await response.json();
    return items;
  }
 
+ const load = () => {
+   const itens = document.querySelector('.items');
+   const paragraphLoading = document.createElement('p');
+   paragraphLoading.className = 'loading';
+   paragraphLoading.innerText = 'loading...';
+   itens.appendChild(paragraphLoading);
+ };
+
+ const deleteLoad = () => {
+   document.querySelector('.loading').remove();
+ };
+
  async function addItem(id) {
    const add = await getItem(id);
    const addOl = document.querySelector('.cart__items');
    const cart = createCartItemElement(add);
    addOl.appendChild(cart);
+   priceCart();
  }
 
 function addItemCart() {
@@ -81,7 +108,9 @@ function addItemCart() {
  };
  
 window.onload = async function onload() { 
+ load();
  await getProduct();
  await addItemCart();
  clear();
+ deleteLoad();
 };
