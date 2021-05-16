@@ -8,10 +8,10 @@ class MovieForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit() {
-    const { onSubmit } = this.props;
-    onSubmit(this.state);
-  }
+  // handleSubmit() {
+  //   const { onSubmit } = this.props;
+  //   onSubmit(this.state);
+  // }
 
   updateMovie(field, newValue) {
     this.setState({ [field]: newValue });
@@ -163,5 +163,14 @@ class MovieForm extends React.Component {
     );
   }
 }
+
+MovieForm.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    storyline: PropTypes.string,
+    id: PropTypes.number,
+  }).isRequired,
+};
 
 export default MovieForm;
