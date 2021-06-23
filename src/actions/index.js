@@ -1,2 +1,7 @@
 // Coloque aqui suas actions
-export const loginEmail = (email) => ({ type: 'LOGIN_EMAIL', payload: { email} });
+export const LOGIN_EMAIL = 'LOGIN_EMAIL';
+
+export const loginEmail = (email) => ({
+  type: LOGIN_EMAIL,
+  payload: { email },
+});

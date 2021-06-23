@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from  'prop-types';
+import PropTypes from 'prop-types';
 import { loginEmail } from '../actions';
 
 class Login extends React.Component {
@@ -28,9 +28,9 @@ class Login extends React.Component {
     const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
     const passwordLength = 5;
     if (regexEmail.test(email) && password.length > passwordLength) {
-      this.setState({ butDisabled: false, });
+      this.setState({ butDisabled: false });
     } else {
-     this.setState({ butDisabled: true, });
+      this.setState({ butDisabled: true });
     }
   }
   // https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test
@@ -42,33 +42,39 @@ class Login extends React.Component {
     const { loginState } = this.props;
 
     return (
-      <main>
-        <h1>Faça login</h1>
-        <input
-          data-testid="email-input"
-          placeholder=" digite seu email"
-          type="email"
-          onChange={ this.handleOnChange }
-        />
-        <input
-          data-testid="password-input"
-          placeholder=" digite sua senha"
-          type="password"
-          onChange={ this.handleOnChange }
-        />
+      <form>
+        <label htmlFor="email-input">
+          <input
+            data-testid="email-input"
+            placeholder=" digite seu email"
+            type="email"
+            onChange={ this.handleOnChange }
+          />
+        </label>
+        <label htmlFor="password-input">
+          <input
+            data-testid="password-input"
+            placeholder=" digite sua senha"
+            type="password"
+            onChange={ this.handleOnChange }
+          />
+        </label>
         <Link to="/carteira">
           <button
             disabled={ butDisabled }
-            type="button"
+            type="submit"
             onClick={ () => loginState(email) }
           >
             Entrar
           </button>
         </Link>
-      </main>
+      </form>
     );
   }
 }
+// const mapStateToProps = ({ user: { email } }) => ({
+//   Email: email,
+// });
 
 const mapDispatchToProps = (dispatch) => ({
   loginState: (email) => dispatch(loginEmail(email)),
@@ -76,6 +82,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 Login.propTypes = {
   loginState: PropTypes.func.isRequired,
-}
+};
 
 export default connect(null, mapDispatchToProps)(Login);

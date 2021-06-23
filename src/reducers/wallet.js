@@ -1,9 +1,15 @@
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
-const initialState = {};
-const wallet = (state = initialState, action) => {
-  switch (action.type) {
-  case '':
-    return state;
+const initialState = {
+  coins: [],
+  expenses: [],
+};
+
+const wallet = (state = initialState, { type, payload }) => {
+  switch (type) {
+  case 'WALLET':
+    return {
+      ...state,
+    };
   default:
     return state;
   }
