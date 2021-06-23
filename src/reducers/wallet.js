@@ -4,7 +4,7 @@ const initialState = {
   expenses: [],
 };
 
-const wallet = (state = initialState, { type, payload }) => {
+const wallet = (state = initialState, { type }) => {
   switch (type) {
   case 'WALLET':
     return {
