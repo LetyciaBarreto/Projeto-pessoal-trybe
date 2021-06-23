@@ -16,7 +16,7 @@ class Login extends React.Component {
     this.EmailAndPassword = this.EmailAndPassword.bind(this);
   }
 
-  handleOnChange({ target: { value, name } }) {
+  handleOnChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     },
@@ -25,7 +25,7 @@ class Login extends React.Component {
 
   EmailAndPassword() {
     const { email, password } = this.state;
-    const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
+    const regexEmail = /^[a-z0-9.]+@[a-z0-9]+.[a-z]+(.[a-z]+)?$/i;
     const passwordLength = 5;
     if (regexEmail.test(email) && password.length > passwordLength) {
       this.setState({ butDisabled: false });
@@ -45,6 +45,7 @@ class Login extends React.Component {
       <form>
         <label htmlFor="email-input">
           <input
+            name="email"
             data-testid="email-input"
             placeholder=" digite seu email"
             type="email"
@@ -53,6 +54,7 @@ class Login extends React.Component {
         </label>
         <label htmlFor="password-input">
           <input
+            name="password"
             data-testid="password-input"
             placeholder=" digite sua senha"
             type="password"
@@ -72,8 +74,8 @@ class Login extends React.Component {
     );
   }
 }
-// const mapStateToProps = ({ user: { email } }) => ({
-//   Email: email,
+// const mapStateToProps = (state) => ({
+//   email: state.user.email,
 // });
 
 const mapDispatchToProps = (dispatch) => ({
