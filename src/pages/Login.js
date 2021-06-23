@@ -13,17 +13,17 @@ class Login extends React.Component {
       password: '',
     };
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.verifyEmailAndPassword = this.verifyEmailAndPassword.bind(this);
+    this.EmailAndPassword = this.EmailAndPassword.bind(this);
   }
 
   handleOnChange({ target: { value, name } }) {
     this.setState({
       [name]: value,
     },
-    () => this.verifyEmailAndPassword());
+    () => this.EmailAndPassword());
   }
 
-  verifyEmailAndPassword() {
+  EmailAndPassword() {
     const { email, password } = this.state;
     const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
     const passwordLength = 5;
