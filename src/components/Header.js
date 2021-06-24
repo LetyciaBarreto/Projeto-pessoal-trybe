@@ -6,6 +6,7 @@ class Header extends Component {
   // constructor(props) {
   //   super(props);
   // }
+
   render() {
     const { email } = this.props;
     return (
@@ -38,13 +39,15 @@ class Header extends Component {
 }
 
 const mapStateToProps = ({
-  user: { email },
+  user: { email }, wallet: { expenses },
 }) => ({
   email,
+  expenses,
 });
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  // expenses: PropTypes.arrayOf(Object).isRequired,
 };
 
 export default connect(mapStateToProps)(Header);

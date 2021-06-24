@@ -9,19 +9,12 @@ const wallet = (state = initialState, { type, payload }) => {
   case 'REQUEST_CURRENCIES':
     return {
       ...state,
-      isFetching: payload.isFetching,
+      currencies: Object.keys(payload.currencies),
     };
-  case 'REQUEST_CURRENCIES_SUCCESS':
+  case 'REQUEST_EXPENSES':
     return {
       ...state,
-      isFetching: payload.isFetching,
-      currencies: payload.currencies,
-    };
-  case 'REQUEST_CURRENCIES_ERROR':
-    return {
-      ...state,
-      error: payload.error,
-      isFetching: payload.isFetching,
+      expenses: [...state.expenses, payload.expenses],
     };
   default:
     return state;

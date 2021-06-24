@@ -1,6 +1,4 @@
 // Coloque aqui suas actions
-import { fetchAPI } from '../services';
-
 export const LOGIN_EMAIL = 'LOGIN_EMAIL';
 
 export const loginEmail = (email) => ({
@@ -9,29 +7,34 @@ export const loginEmail = (email) => ({
 });
 
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
-export const REQUEST_CURRENCIES_SUCCESS = 'REQUEST_CURRENCIES_SUCCES';
-export const REQUEST_CURRENCIES_ERROR = 'REQUEST_CURRENCIES_ERROR';
+export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
 
-export const requestCurrencies = () => ({
+export const requestCurrencies = (currencies) => ({
   type: REQUEST_CURRENCIES,
-  payload: { isFething: true },
-});
-export const requestCurrenciesSucces = (currencies) => ({
-  type: REQUEST_CURRENCIES_SUCCESS,
-  payload: { isFething: false, currencies },
-});
-export const requestCurrenciesError = (error) => ({
-  type: REQUEST_CURRENCIES_ERROR,
-  payload: { isFething: false, error },
+  payload: { currencies },
 });
 
-export const fetchRequestApi = () => (dispatch) => {
-  dispatch(requestCurrencies());
-  fetchAPI()
-    .then((requestResponse) => dispatch(
-      requestCurrenciesSucces(requestResponse),
-    ))
-    .catch((requestError) => dispatch(
-      requestCurrenciesError(requestError),
-    ));
+export function fetchRequestApi() {
+  return (dispatch) => {
+    fetch('https://economia.awesomeapi.com.br/json/all')
+      .then((response) => response.json())
+      .then((currencie) => {
+        delete currencie.USDT;
+        dispatch(requestCurrencies(currencie));
+      });
+  };
+}
+
+export const requestExpenses = (expenses) => ({
+  type: REQUEST_EXPENSES,
+  payload: { expenses },
+});
+
+export const fetchRequestExpense = (expense) => (dispatch) => {
+  fetch('https://economia.awesomeapi.com.br/json/all')
+    .then((response) => response.json())
+    .then((resp) => {
+      expense.exchangeRates = resp;
+      dispatch(requestExpenses(expense));
+    });
 };
