@@ -66,7 +66,7 @@ class Form extends Component {
         Método de pagamento
         <select
           id="method"
-          name="methods"
+          name="method"
           onChange={ this.handleOnChange }
         >
           <option value="money">Dinheiro</option>
