@@ -111,8 +111,11 @@ class Form extends Component {
         { this.selectCoin() }
         { this.selectMethods() }
         { this.selectTag() }
-        <button type="button" onClick={ this.handleOnClick }>
-          Adicionar depesas
+        <button
+          type="button"
+          onClick={ this.handleOnClick }
+        >
+          Adicionar depesa
         </button>
       </form>
     );
