@@ -16,6 +16,7 @@ const wallet = (state = initialState, { type, payload }) => {
       ...state,
       expenses: [...state.expenses, payload.expenses],
     };
+  // case e requisito feitos com ajuda de colegas e consultas
   case 'DELETE_EXPENSE':
     return {
       ...state,
