@@ -115,7 +115,7 @@ class Form extends Component {
           type="button"
           onClick={ this.handleOnClick }
         >
-          Adicionar depesa
+          Adicionar despesa
         </button>
       </form>
     );
