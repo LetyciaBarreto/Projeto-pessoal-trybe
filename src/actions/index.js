@@ -30,7 +30,7 @@ export const requestExpenses = (expenses) => ({
   payload: { expenses },
 });
 
-export const fetchRequestExpense = (expense) => (dispatch) => {
+export const fetchExpensesApi = (expense) => (dispatch) => {
   fetch('https://economia.awesomeapi.com.br/json/all')
     .then((response) => response.json())
     .then((resp) => {

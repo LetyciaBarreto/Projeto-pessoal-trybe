@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchRequestApi, requestExpenses, fetchRequestExpense } from '../actions';
+import { fetchExpensesApi, fetchRequestApi, requestExpenses } from '../actions';
 
 // Requisito feito com ajuda de colegas no discord, mas preciso voltar e entender como fazer com o metodo success e error
 class Form extends Component {
@@ -10,10 +10,10 @@ class Form extends Component {
     this.state = {
       id: 0,
       value: '',
-      description: '',
-      coin: 'USD',
-      methods: 'Dinheiro',
+      currency: 'USD',
+      method: 'Dinheiro',
       tag: '',
+      description: '',
       exchangeRates: {},
     };
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -28,25 +28,25 @@ class Form extends Component {
     fetchRequest();
   }
 
+  handleOnClick() {
+    const { fetchExpenses } = this.props;
+    const { id } = this.state;
+    this.setState({ id: id + 1 });
+    fetchExpenses(this.state);
+  }
+
   handleOnChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });
   }
 
-  handleOnClick() {
-    const { expenseRequest } = this.props;
-    const { id } = this.state;
-    this.setState({ id: id + 1 });
-    expenseRequest(this.state);
-  }
-
   selectCoin() {
     const { currencies } = this.props;
     return (
-      <label htmlFor="coin">
-        Moeda:
-        <select id="coin" name="coin" onChange={ this.handleOnChange }>
+      <label htmlFor="currency">
+        Moeda
+        <select id="currency" name="currency" onChange={ this.handleOnChange }>
           { currencies.map((coin) => (
             <option
               value={ coin }
@@ -62,10 +62,10 @@ class Form extends Component {
 
   selectMethods() {
     return (
-      <label htmlFor="methods">
-        Método de pagamento:
+      <label htmlFor="method">
+        Método de pagamento
         <select
-          id="methods"
+          id="method"
           name="methods"
           onChange={ this.handleOnChange }
         >
@@ -96,7 +96,7 @@ class Form extends Component {
     return (
       <form>
         <label htmlFor="value">
-          Valor:
+          Valor
           <input type="text" id="value" name="value" onChange={ this.handleOnChange } />
         </label>
         <label htmlFor="description">
@@ -118,19 +118,21 @@ class Form extends Component {
     );
   }
 }
-const mapDispatchToProps = (dispatch) => ({
-  fetchRequest: () => dispatch(fetchRequestApi()),
-  expenseRequest: (expense) => dispatch(fetchRequestExpense(expense)),
-  expensesAdd: (expenses) => dispatch(requestExpenses(expenses)),
-});
+
 const mapStateToProps = ({ wallet: { currencies, expenses } }) => ({
   currencies,
   expenses,
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchRequest: () => dispatch(fetchRequestApi()),
+  fetchExpenses: (expense) => dispatch(fetchExpensesApi(expense)),
+  expensesAdd: (expenses) => dispatch(requestExpenses(expenses)),
+});
+
 Form.propTypes = {
   fetchRequest: PropTypes.func.isRequired,
-  expenseRequest: PropTypes.func.isRequired,
+  fetchExpenses: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Form);
