@@ -8,6 +8,7 @@ export const loginEmail = (email) => ({
 
 export const REQUEST_CURRENCIES = 'REQUEST_CURRENCIES';
 export const REQUEST_EXPENSES = 'REQUEST_EXPENSES';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const requestCurrencies = (currencies) => ({
   type: REQUEST_CURRENCIES,
@@ -38,3 +39,8 @@ export const fetchExpensesApi = (expense) => (dispatch) => {
       dispatch(requestExpenses(expense));
     });
 };
+
+export const deleteExpense = (deleteEX) => ({
+  type: DELETE_EXPENSE,
+  payload: { deleteEX },
+});
