@@ -7,8 +7,8 @@ import { deleteExpense } from '../actions';
 class Table extends Component {
   constructor(props) {
     super(props);
-    this.tableExpenses = this.tableExpenses.bind(this);
     this.deleteEx = this.deleteEx.bind(this);
+    this.tableEx = this.tableEx.bind(this);
   }
 
   deleteEx(index) {
@@ -18,34 +18,39 @@ class Table extends Component {
     apagar(arrExpenses);
   }
 
-  tableExpenses() {
+  tableEx() {
     const { expenses } = this.props;
     return (
-      expenses.map(({
-        id, description, tag, method, value, currency, exchangeRates }) => {
-        const coin = exchangeRates[currency];
-        return (
-          <tr key={ id }>
-            <td>{description}</td>
-            <td>{tag}</td>
-            <td>{method}</td>
-            <td>{value}</td>
-            <td>{coin.name}</td>
-            <td>{parseFloat(coin.ask).toFixed(2)}</td>
-            <td>{(coin.ask * value).toFixed(2)}</td>
-            <td>Real</td>
-            <td>
-              <button
-                type="button"
-                data-testid="delete-btn"
-                onClick={ () => this.deleteEx }
-              >
-                Deletar
-              </button>
-            </td>
-          </tr>
-        );
-      })
+      expenses.map((
+        { description, tag, method, value, currency, exchangeRates }, index,
+      ) => (
+        <tr key={ index }>
+          <td>{description}</td>
+          <td>{tag}</td>
+          <td>{method}</td>
+          <td>{value}</td>
+          <td>
+            {exchangeRates[currency].name.split('/')[0]}
+          </td>
+          <td>
+            {parseFloat(exchangeRates[currency].ask).toFixed(2)}
+          </td>
+          <td>
+            {parseFloat(value
+              * exchangeRates[currency].ask).toFixed(2)}
+          </td>
+          <td>Real</td>
+          <td>
+            <button
+              type="button"
+              data-testid="delete-btn"
+              onClick={ () => this.deleteEx(index) }
+            >
+              Deletar
+            </button>
+          </td>
+        </tr>
+      ))
     );
   }
 
@@ -65,7 +70,9 @@ class Table extends Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
-        <tbody>{ this.tableExpenses() }</tbody>
+        <tbody>
+          { this.tableEx() }
+        </tbody>
       </table>
     );
   }

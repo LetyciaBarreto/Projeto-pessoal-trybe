@@ -12,7 +12,9 @@ export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const requestCurrencies = (currencies) => ({
   type: REQUEST_CURRENCIES,
-  payload: { currencies },
+  payload: {
+    currencies,
+  },
 });
 
 export function fetchRequestApi() {
@@ -28,7 +30,9 @@ export function fetchRequestApi() {
 
 export const requestExpenses = (expenses) => ({
   type: REQUEST_EXPENSES,
-  payload: { expenses },
+  payload: {
+    expenses,
+  },
 });
 
 export const fetchExpensesApi = (expense) => (dispatch) => {
@@ -42,5 +46,5 @@ export const fetchExpensesApi = (expense) => (dispatch) => {
 
 export const deleteExpense = (deleteEX) => ({
   type: DELETE_EXPENSE,
-  payload: { deleteEX },
+  payload: deleteEX,
 });
