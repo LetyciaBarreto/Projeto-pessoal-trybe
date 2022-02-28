@@ -9,7 +9,7 @@ class NewMovie extends Component {
    const { history } = this.props;
    const result = await movieAPI.createMovie(newMovie);
    history.push('/');
-   console.log(result);
+  //  console.log(result);
  }
 
  render() {
